@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  node:
+    image: dudedb:latest
+    volumes:
+      - ./data:/data:rw
+    scale: 4
+    environment:
+      DOCKER_COMPOSE_SCALE: 4
+  lb:
+    image: nginx:alpine
+    depends_on:
+      - node
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:8080
